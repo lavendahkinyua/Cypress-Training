@@ -32,5 +32,13 @@ describe("Ui Web Controls Learning" , function () {
         cy.get('#autocomplete').should('have.value','Turkey')
 
     })
+    it ("visible and invisible elements" , function () {
+        cy.get('[name="show-hide"]').should('be.visible')
+        cy.get('#hide-textbox').click()
+        cy.get('[name="show-hide"]').should('not.be.visible')
+        cy.get('#show-textbox').click()
+        cy.get('[name="show-hide"]').should('be.visible')
+
+    })
 
 })
