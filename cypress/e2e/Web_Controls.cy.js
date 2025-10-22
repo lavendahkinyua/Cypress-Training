@@ -32,13 +32,41 @@ describe("Ui Web Controls Learning" , function () {
         cy.get('#autocomplete').should('have.value','Turkey')
 
     })
-    it ("visible and invisible elements" , function () {
+    it("visible and invisible elements" , function () {
         cy.get('[name="show-hide"]').should('be.visible')
         cy.get('#hide-textbox').click()
         cy.get('[name="show-hide"]').should('not.be.visible')
         cy.get('#show-textbox').click()
         cy.get('[name="show-hide"]').should('be.visible')
 
+    })
+    //alert , one button message
+    it("alert learning" , function () {
+        //Cy.on comes before cy.get beceuse its a listener so before you even click the button you have to listen to the event
+        cy.on('window:alert',(text) => {
+            expect (text).to.equal('Hello , share this practice page and share your knowledge')
+        })
+        cy.get('#alertbtn').click()
+       
+    })   
+    //Confirm, two button message
+    it('confirm learning' , function () {
+        //CY.ON TO LISTEN AND GIVE IT INSTRUCTIONS OF WHAT ITS LISTENING TO
+        cy.on('window:confirm' , (popup) => {
+            expect (popup).to.equal('Hello , Are you sure you want to confirm?')
+            return false // to click cancel button
+            // return true // to click ok button
+        })
+        cy.get('#confirmbtn').click()
+    })
+
+    //windows and tabs handling
+    it.only('diffrent tab diffrent domain' , function () {
+        cy.get('#opentab').invoke('removeAttr','target').click()
+        //no end slash in url
+        cy.origin('https://www.qaclickacademy.com', () => {
+            cy.contains('Best platform to learn Software and Automation Testing').should('be.visible')
+        })
     })
 
 })

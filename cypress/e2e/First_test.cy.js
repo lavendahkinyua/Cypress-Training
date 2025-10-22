@@ -18,17 +18,25 @@ describe ("OrangeHrm Testing" , function() {
     cy.get('.oxd-main-menu-item').eq(8).click()
     cy.contains('Rahul Das' , {timeout:40000}).should('be.visible')
   })
-  it.only ('admin tab', function(){
-    cy.get('.oxd-main-menu-item').eq(0).click()
-    cy.get('.--visited > .oxd-topbar-body-nav-tab-item').click()
-    cy.get(':nth-child(4) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text--after > .oxd-icon').click()
-    cy.get('.oxd-select-option').each(($el) => {
-      if($el.text() === "Enabled"){
-          cy.wrap ($el).click()
-      }
-    })
-   cy.get('.oxd-select-text-input').should('contain.text', 'Enabled')
-
+  it.only ('admin tab', function () {
+    cy.get(".oxd-main-menu-item").eq(0).click()
+    cy.get('.oxd-topbar-body-nav-tab').eq(0).click()
+    cy.get('.oxd-dropdown-menu > li').click()
+    cy.get(':nth-child(4) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input').click()
+    cy.get('.oxd-select-dropdown > :nth-child(2) > span').click()
+    cy.get('.oxd-select-text-input').should('contain.text','Enable')
   })
+  //Way 2
+  //it.only ('admin tab', function(){
+    //cy.get('.oxd-main-menu-item').eq(0).click()
+    //cy.get('.--visited > .oxd-topbar-body-nav-tab-item').click()
+    //cy.get(':nth-child(4) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text--after > .oxd-icon').click()
+    //cy.get('.oxd-select-option').each(($el) => {
+    //if($el.text() === "Enabled"){
+          //cy.wrap ($el).click()
+      //}
+    //})
+   //cy.get('.oxd-select-text-input').should('contain.text', 'Enabled')
 
+  //})
 })
