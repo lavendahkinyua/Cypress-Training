@@ -61,12 +61,30 @@ describe("Ui Web Controls Learning" , function () {
     })
 
     //windows and tabs handling
-    it.only('diffrent tab diffrent domain' , function () {
+    it('diffrent tab diffrent domain' , function () {
         cy.get('#opentab').invoke('removeAttr','target').click()
         //no end slash in url
         cy.origin('https://www.qaclickacademy.com', () => {
             cy.contains('Best platform to learn Software and Automation Testing').should('be.visible')
         })
     })
+    //webtable handling
+    it('webtable handling' , function () {
+        //if there is more than one table use table IDs or classes to locate the correct one if its one you can use cy.get('table')
+        cy.get('.tableFixHead').should('be.visible')
+        
+        //fixed head test. to avoid it selecting the head you can use below
+        cy.get('.tableFixHead tbody tr').eq(8).scrollIntoView().find('td').eq(2).should('have.text','Delhi')
+        //for below am counting the header as row 0 but if you dont want to count it as row 0 use tbody in the selector
+        cy.get('.tableFixHead tr').eq(9).scrollIntoView().find('td').eq(2).should('have.text','Delhi')
+        // the two lines of code are doing same thing just different way of counting rows
+    })
 
+    //hidden element handling when you can hover or similar interactions- a way to reveal hidden elements
+    it.only('mouse hover handling' , function() {
+       cy.get('.mouse-hover-content').invoke('show') 
+       cy.get('.mouse-hover-content').contains('Top').click()
+    
+    })
+    
 })
