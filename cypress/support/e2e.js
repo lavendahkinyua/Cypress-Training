@@ -15,3 +15,6 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+/// <reference types="cypress" />
+/// <reference types="cypress-iframe" />
+import 'cypress-iframe';

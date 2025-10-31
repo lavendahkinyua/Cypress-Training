@@ -81,10 +81,30 @@ describe("Ui Web Controls Learning" , function () {
     })
 
     //hidden element handling when you can hover or similar interactions- a way to reveal hidden elements
-    it.only('mouse hover handling' , function() {
+    it('mouse hover handling' , function() {
        cy.get('.mouse-hover-content').invoke('show') 
        cy.get('.mouse-hover-content').contains('Top').click()
     
     })
+     
+    //frame handling- mini html doc inside a html doc
+    //first you need to install cypress-iframe package by running npm install -D cypress-iframe in terminal
+    //then you need to add this line in cypress/support/e2e.js : import 'cypress-iframe';
+    //then to start using it you need to add this line in your test file : /// <reference types="cypress-iframe" />
+    //then now inspect the frame and get its id or class or any other locator, you will know its a frame if you see <iframe ......> in html
+    //we use frame Id to tell cypress to switch to that frame not anything else on the page
+    it.only('frame handling' , function () {
+        //switching to frame using frame id and frameloaded function to tell cypress to switch to iframe mode
+        cy.frameLoaded('#courses-iframe')
+        //now we are inside the frame and we can do anything inside the frame
+        //you have to use cy.iframe() to tell cypress you are working inside the frame
+        // without cy.iframe() cypress will look for elements in main html doc not inside the frame
+        // syntax : cy.iframe().find('whatever you are looking for inside the frame, link, text etc')
+        cy.iframe().find('a[href="https://courses.rahulshettyacademy.com/courses"]').eq(2).click({force:true})
+        cy.frameLoaded() //reloading frame to avoid any errors
+        //other tests that are not href related using contains
+        //error subject no longer attached to DOM- to avoid this error we use cy.frameLoaded() to reload the frame
+        cy.iframe().contains('All-Access Membership').click({force:true})
     
+    })
 })
